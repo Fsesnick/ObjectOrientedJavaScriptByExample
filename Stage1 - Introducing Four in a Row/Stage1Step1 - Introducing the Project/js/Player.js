@@ -41,4 +41,12 @@ class Player {
 	get activeToken() {
         return this.unusedTokens[0];
 	}
+    /**
+    * Verifica se um jogador tem algum tokens não jogado restante
+    * @return {Boolean}
+    */
+    checkTokens(){
+        return this.unusedTokens.length == 0 ? false : true;
+    }
+
 }

@@ -51,33 +51,10 @@ class Game {
             }
         }
 	}
-
-    /**
-     * Finds Space object to drop Token into, drops Token
-     
-    playToken(){
-        let spaces = this.board.spaces;
-        let activeToken = this.activePlayer.activeToken;
-        let targetColumn = spaces[activeToken.columnLocation];
-        let targetSpace = null;
-
-		for (let space of targetColumn) {
-			if (space.token === null) {
-				targetSpace = space;
-			}
-        }
-
-        if (targetSpace !== null) {
-            game.ready = false;
-    		activeToken.drop(targetSpace);   
-        }              
-    } 
-    */
-   
-    /**
+     /**
      * Finds Space object to drop Token into, drops Token
      */
-    playToken(){
+     playToken(){
         let spaces = this.board.spaces;
         let activeToken = this.activePlayer.activeToken;
         let targetColumn = spaces[activeToken.columnLocation];
@@ -98,6 +75,35 @@ class Game {
             });  
         }              
     }
+
+     /**
+    * Atualiza o estado do jogo depois que o token é jogado.
+    * @param {Object} token - O token que está sendo jogado.
+    * @param {Object} target - Espaço direcionado para token lancado.
+    */
+    updateGameState(token, target) {
+        target.mark(token);
+
+        if (!this.checkForWin(target)) {
+            
+            this.switchPlayers();
+            
+            if (this.activePlayer.checkTokens()) {
+                this.activePlayer.activeToken.drawHTMLToken();
+                this.ready = true;
+            } else {
+                this.gameOver('No more tokens');
+            }
+        } else {
+            this.gameOver(`${target.owner.name} wins!`)
+        }			
+    }
+    /** 
+     * Checks if there a winner on the board after each token drop.
+     * @param   {Object}    target - Targeted space for dropped token.
+     * @return  {boolean}   Boolean value indicating whether the game has been won (true) or not (false)
+     */
+
     checkForWin(target){
         const owner = target.token.owner;
         let win = false;
@@ -170,7 +176,8 @@ class Game {
         document.getElementById('game-over').style.display = 'block';
         document.getElementById('game-over').textContent = message;
     }
-    
+   
+
    /* activeToken.drop(targetSpace, function(){
         //callback function code here           
       });

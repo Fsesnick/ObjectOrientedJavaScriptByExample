@@ -34,13 +34,7 @@ class Space {
             return this.token.owner;
         }
     }
-    /** 
-     * Checks if there a winner on the board after each token drop.
-     * @param   {Object}    Targeted space for dropped token.
-     * @return  {boolean}   Boolean value indicating whether the game has been won (true) or not (false)
-     */
-
-    
+        
     /**
      * Espaço atualizados para  expor que um token foi inserido nele.
      * @param {Object} token - O token jogado
