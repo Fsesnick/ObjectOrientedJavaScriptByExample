@@ -54,7 +54,7 @@ class Game {
 
     /**
      * Finds Space object to drop Token into, drops Token
-     */
+     
     playToken(){
         let spaces = this.board.spaces;
         let activeToken = this.activePlayer.activeToken;
@@ -70,6 +70,32 @@ class Game {
         if (targetSpace !== null) {
             game.ready = false;
     		activeToken.drop(targetSpace);   
+        }              
+    } 
+    */
+   
+    /**
+     * Finds Space object to drop Token into, drops Token
+     */
+    playToken(){
+        let spaces = this.board.spaces;
+        let activeToken = this.activePlayer.activeToken;
+        let targetColumn = spaces[activeToken.columnLocation];
+        let targetSpace = null;
+
+        for (let space of targetColumn) {
+            if (space.token === null) {
+                targetSpace = space;
+            }
+        }
+
+        if (targetSpace !== null) {
+            const game = this;
+            game.ready = false;
+
+            activeToken.drop(targetSpace, function(){
+                game.updateGameState(activeToken, targetSpace);           
+            });  
         }              
     }
     checkForWin(target){
@@ -144,4 +170,9 @@ class Game {
         document.getElementById('game-over').style.display = 'block';
         document.getElementById('game-over').textContent = message;
     }
+    
+   /* activeToken.drop(targetSpace, function(){
+        //callback function code here           
+      });
+    */
 }
