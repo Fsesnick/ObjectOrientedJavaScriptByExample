@@ -1,10 +1,21 @@
 class Game {
-        constructor() {
+    constructor() {
         this.board = new Board();
         this.players = this.createPlayers();
         this.ready = false;
     }
-      /** 
+    
+    
+    /** 
+     * Returns active player.
+     * @return  {Object}    player - The active player.
+     */
+	get activePlayer() {
+        return this.players.find(player => player.active);
+	}
+    
+    
+    /** 
      * Creates two player objects
      * @return  {array}    An array of two player objects.
      */
@@ -14,10 +25,13 @@ class Game {
         return players;
     }
     
-       /** 
-     * Initializes game. 
+    
+    /** 
+     * Begins game. 
      */
     startGame(){
-
+        this.board.drawHTMLBoard();
+        this.activePlayer.activeToken.drawHTMLToken();
+        this.ready = true;
     }
 }
