@@ -52,7 +52,7 @@ class Game {
         }
 	}
      /**
-     * Finds Space object to drop Token into, drops Token
+     * Encontra o objeto Space para soltar o Token, solta o Token
      */
      playToken(){
         let spaces = this.board.spaces;
