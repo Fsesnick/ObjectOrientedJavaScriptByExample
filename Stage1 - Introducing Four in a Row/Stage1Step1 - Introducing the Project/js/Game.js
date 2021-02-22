@@ -47,7 +47,7 @@ class Game {
             } else if (e.key === "ArrowRight") {
                 this.activePlayer.activeToken.moveRight(this.board.columns);
             } else if (e.key === "ArrowDown") {
-                // play token
+                this.playToken();
             }
         }
 	}
@@ -76,28 +76,6 @@ class Game {
         }              
     }
 
-     /**
-    * Atualiza o estado do jogo depois que o token é jogado.
-    * @param {Object} token - O token que está sendo jogado.
-    * @param {Object} target - Espaço direcionado para token lancado.
-    */
-    updateGameState(token, target) {
-        target.mark(token);
-
-        if (!this.checkForWin(target)) {
-            
-            this.switchPlayers();
-            
-            if (this.activePlayer.checkTokens()) {
-                this.activePlayer.activeToken.drawHTMLToken();
-                this.ready = true;
-            } else {
-                this.gameOver('No more tokens');
-            }
-        } else {
-            this.gameOver(`${target.owner.name} wins!`)
-        }			
-    }
     /** 
      * Checks if there a winner on the board after each token drop.
      * @param   {Object}    target - Targeted space for dropped token.
@@ -173,13 +151,32 @@ class Game {
     * @param {string} message - Mensagem do fim de jogo.
     */
     gameOver(message){
-        document.getElementById('game-over').style.display = 'block';
-        document.getElementById('game-over').textContent = message;
+        document.getElementById('game-over').style.display='block';
+        document.getElementById('game-over').textContent=message;
     }
-   
-
-   /* activeToken.drop(targetSpace, function(){
-        //callback function code here           
-      });
+  
+    
+ /**
+    * Atualiza o estado do jogo depois que o token é jogado.
+    * @param {Object} token - O token que está sendo jogado.
+    * @param {Object} target - Espaço direcionado para token lancado.
     */
+   
+    updateGameState(token, target) {
+    target.mark(token);
+
+    if (!this.checkForWin(target)) {
+        
+        this.switchPlayers();
+        
+        if (this.activePlayer.checkTokens()) {
+            this.activePlayer.activeToken.drawHTMLToken();
+            this.ready = true;
+        } else {
+            this.gameOver('No more tokens');
+        }
+    } else {
+        this.gameOver(`${target.owner.name} wins!`)
+    }			
+}
 }
