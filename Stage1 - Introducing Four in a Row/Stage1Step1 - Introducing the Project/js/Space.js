@@ -21,5 +21,17 @@ class Space {
         svgSpace.setAttributeNS(null, "stroke", "none");
 
         document.getElementById("mask").appendChild(svgSpace);     
-	}	
+	}
+    	
+    /**
+     * Checks if space has an associated token to find its owner
+     * @return  {(null|Object)} Returns null or the owner object of the space's associated token.
+     */
+    get owner() {
+        if (this.token === null) {
+            return null;
+        } else {
+            return this.token.owner;
+        }
+    }
 }
